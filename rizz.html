@@ -1,202 +1,233 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>RIZZ PAYMENT</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Always Prime — 3D Live & Goyang</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root{--accent:#6366f1;--neon:#00f3f1;--card-w:26rem;}
+  html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica Neue,Arial;}
+  body{
+    background:url('https://files.catbox.moe/vwjsu0.jpg') no-repeat center/cover fixed;
+    display:flex;align-items:center;justify-content:center;
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+    color:#e6eef8;overflow:hidden;
+  }
 
-    body {
-      margin: 0;
-      padding: 30px 15px;
-      font-family: 'Share Tech Mono', monospace;
-      background: #000;
-      color: #00ff99;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      background-image: linear-gradient(to bottom, #000000, #001a00);
-      animation: matrixScroll 30s linear infinite;
-    }
+  /* Video background visual */
+  #bgVideo{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-3;
+  }
 
-    @keyframes matrixScroll {
-      from { background-position: 0 0; }
-      to { background-position: 0 1000px; }
-    }
+  /* Audio-only tersembunyi */
+  #bgAudio{
+    display:none;
+  }
 
-    h1 {
-      color: #00ffcc;
-      text-align: center;
-      font-size: 2.5em;
-      margin-bottom: 10px;
-    }
-
-    .thumbnail {
-      width: 160px;
-      height: 160px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px #00ff99;
-      margin: 20px 0;
-    }
-
-    .section {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      width: 100%;
-      max-width: 350px;
-      margin-bottom: 40px;
-    }
-
-    .product-card {
-      background: rgba(0, 30, 0, 0.6);
-      border: 1px solid #00ff99;
-      border-radius: 12px;
-      padding: 15px;
-      box-shadow: 0 0 15px #004d26;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .product-card:hover {
-      background: rgba(0, 50, 0, 0.7);
-      transform: scale(1.03);
-    }
-
-    .product-title {
-      font-size: 1.1em;
-      font-weight: bold;
-      color: #00ffcc;
-    }
-
-    .price {
-      font-size: 0.95em;
-      margin: 6px 0;
-      color: #66ffcc;
-    }
-
-    .product-detail {
-      display: none;
-      margin-top: 8px;
-      font-size: 0.85em;
-      color: #99ffcc;
-      white-space: pre-line;
-    }
-
-    button {
-      background-color: #00ff99;
-      color: black;
-      border: none;
-      padding: 10px;
-      border-radius: 8px;
-      font-weight: bold;
-      font-family: inherit;
-      box-shadow: 0 0 10px #00ff99;
-      cursor: pointer;
-      transition: all 0.2s ease-in-out;
-    }
-
-    button:hover {
-      transform: scale(1.05);
-    }
-
-    hr {
-      width: 80%;
-      border: none;
-      height: 1px;
-      background-color: #004400;
-      margin: 30px 0;
-    }
-
-    .note {
-      color: #ccc;
-      font-size: 0.9em;
-      text-align: center;
-    }
-  </style>
+  .bg-light{position:fixed;inset:0;pointer-events:none;z-index:0;background: radial-gradient(600px 400px at 50% 20%, rgba(99,102,241,0.18), transparent 15%), radial-gradient(400px 300px at 20% 80%, rgba(0,243,241,0.06), transparent 12%);transition:background-position .15s linear;mix-blend-mode: screen;filter: blur(6px);}
+  .glow-wrap{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;padding:2rem;}
+  #card{width:var(--card-w);max-width:calc(100% - 2rem);background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03));border-radius:14px;padding:28px;box-shadow:0 10px 30px rgba(2,6,23,0.6),0 0 60px rgba(99,102,241,0.06),inset 0 1px 0 rgba(255,255,255,0.02);backdrop-filter:blur(8px) saturate(120%);transform-style:preserve-3d;transition:transform .15s ease-out;position:relative;overflow:hidden;border:1px solid rgba(99,102,241,0.08);}
+  #card::after{content:"";position:absolute;inset:-4px;z-index:-1;border-radius:16px;background:linear-gradient(90deg,rgba(99,102,241,0.08),rgba(0,243,241,0.03));filter:blur(20px);opacity:.9;}
+  .logo-wrap{display:flex;justify-content:center;align-items:center;margin-bottom:8px;transform: translateZ(40px) translateY(-4px);}
+  .logo{width:120px;height:120px;object-fit:cover;border-radius:999px;border:4px solid rgba(239,68,68,0.9);box-shadow:0 8px 24px rgba(0,0,0,0.6),0 0 24px rgba(99,102,241,0.12);}
+  .title{text-align:center;margin:10px 0 18px;font-weight:700;color:#e6eef8;letter-spacing:0.6px;transform: translateZ(30px);}
+  .title .brand{display:block;font-size:1.05rem;color:var(--accent);text-shadow:0 6px 18px rgba(99,102,241,0.14);}
+  .title .sub{font-size:0.78rem;color:#cfeffd;opacity:.9;}
+  .controls{transform: translateZ(20px);}
+  .field{width:100%;padding:10px 12px;border-radius:10px;margin-bottom:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.04);color:#e8f6ff;outline:none;transition:box-shadow .18s,transform .12s;}
+  .field:focus{box-shadow:0 6px 20px rgba(99,102,241,0.14);transform: translateY(-2px);}
+  .row{display:flex;gap:10px;flex-wrap:wrap;}
+  .btn{flex:1;padding:10px 12px;border-radius:10px;font-weight:700;cursor:pointer;border:none;color:#06121a;background:linear-gradient(180deg,#fff 0%,#dfefff 100%);box-shadow:0 6px 18px rgba(2,6,23,0.45);transition:transform .12s ease,box-shadow .12s;}
+  .btn:hover{transform: translateY(-3px);box-shadow:0 12px 28px rgba(2,6,23,0.55);}
+  .btn-outline{background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.02));color:#e6eef8;border:1px solid rgba(99,102,241,0.12);box-shadow:none;}
+  .btn-danger{background:linear-gradient(180deg,#ef4444,#dc2626);color:#fff;}
+  .btn-android{background:linear-gradient(180deg,#fb923c,#f97316);color:#051017;}
+  .btn-ios{background:linear-gradient(180deg,#ef4444,#dc2626);color:#051017;}
+  .status{text-align:center;margin-top:10px;min-height:1.2rem;color:#cfeffd;font-size:0.9rem;}
+  .footer{display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:10px;transform: translateZ(10px);}
+  .credit{color:rgba(183,199,255,0.9);font-size:0.82rem;}
+  .support{padding:6px 10px;border-radius:8px;background:linear-gradient(90deg,#00F3F1,#60e6ff);color:#022;font-weight:700;text-decoration:none;}
+  @keyframes idleWiggle{0%,100%{transform:rotateX(0deg) rotateY(0deg)}25%{transform:rotateX(0.8deg) rotateY(-0.9deg)}50%{transform:rotateX(-0.9deg) rotateY(0.9deg)}75%{transform:rotateX(0.8deg) rotateY(0.8deg)}}
+  .idle{animation:idleWiggle 3.6s infinite ease-in-out;}
+  @keyframes shakeCard{0%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}100%{transform:translateX(0)}}
+  .shake{animation:shakeCard 0.5s ease;}
+  @media (max-width:520px){#card{padding:18px;width:90vw}.logo{width:100px;height:100px}}
+</style>
 </head>
 <body>
+<!-- Video background -->
+<video id="bgVideo" autoplay muted loop playsinline>
+  <source src="https://files.catbox.moe/gvlmk6.mp4" type="video/mp4">
+</video>
 
-  <h1>Rizz Payment</h1>
-  <img src="https://files.catbox.moe/vwjsu0.jpg" class="thumbnail" />
+<!-- Audio-only (tersembunyi) -->
+<audio id="bgAudio" loop>
+  <source src="https://files.catbox.moe/gvlmk6.mp4" type="audio/mp4">
+</audio>
 
-  <!-- QRIS & DUKUNGAN -->
-  <div class="section">
-    <button onclick="window.open('https://files.catbox.moe/9c2fpl.jpg', '_blank')">QRIS</button>
-    <button onclick="event.preventDefault()">DANA: 087831721997</button>
-    <button onclick="event.preventDefault()">GOPAY: 087831721997</button>
+<div class="bg-light" id="bgLight"></div>
+<div class="glow-wrap">
+  <div id="card" class="idle">
+    <!-- LOGIN VIEW -->
+    <div id="loginView">
+      <div class="logo-wrap">
+        <img class="logo" src="https://files.catbox.moe/vwjsu0.jpg" alt="Always Prime Logo">
+      </div>
+      <div class="title">
+        <span class="brand">𝐀𝐥𝐰𝐚𝐲𝐬 𝐏𝐫𝐢𝐦𝐞</span>
+        <span class="sub">Login Panel — 3D Live</span>
+      </div>
+      <div class="controls">
+        <input id="username" class="field" type="text" placeholder="Username your account" />
+        <input id="password" class="field" type="password" placeholder="Password" />
+        <div class="row">
+          <button id="loginBtn" class="btn btn-outline">Login</button>
+          <a href="https://t.me/kepomeemwk" class="btn btn-outline">Contact</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN VIEW -->
+    <div id="mainView" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div id="welcomeUser" class="credit">Welcome</div>
+        <button id="logoutBtn" class="btn btn-outline" style="padding:6px 10px">Logout</button>
+      </div>
+      <div style="text-align:center;margin-bottom:8px;padding:8px;border-radius:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(239,68,68,0.08);">𝐀𝐥𝐰𝐚𝐲𝐬 𝐏𝐫𝐢𝐦𝐞</div>
+      <div style="display:flex;justify-content:center;padding:8px 0;margin-bottom:6px">
+        <img id="avatarImg" src="https://files.catbox.moe/vwjsu0.jpg" class="logo" style="width:96px;height:96px;border-width:3px" />
+      </div>
+      <div class="controls">
+        <input id="phone" class="field" type="text" placeholder="Masukkan nomor WA (628xxxx)" />
+        <button id="btnDelay" class="btn btn-danger" style="margin-bottom:10px">Protocol Only (Demo)</button>
+        <div class="row">
+          <button id="btnAndroid" class="btn btn-android">Crash Beta</button>
+          <button id="btnIOS" class="btn btn-ios">Crash Business</button>
+          <button id="btnCrashUI" class="btn btn-outline">System UI</button>
+        </div>
+        <p id="status" class="status" aria-live="polite"></p>
+        <div style="margin-top:10px;color:rgba(200,220,255,0.7);font-size:0.78rem;">Mode: <strong>SIMULASI AMAN</strong> — tidak ada request ke API eksternal</div>
+      </div>
+      <div class="footer">
+        <div class="credit">© 𝐀𝐥𝐰𝐚𝐲𝐬 𝐏𝐫𝐢𝐦𝐞</div>
+        <a class="support" href="https://t.me/kepomeemwk">Support</a>
+      </div>
+    </div>
   </div>
-  <div class="note">Atas Nama: <strong>A D I T I A</strong></div>
+</div>
 
-  <hr />
+<script>
+/* --- UI refs --- */
+const loginView = document.getElementById('loginView');
+const mainView  = document.getElementById('mainView');
+const loginBtn  = document.getElementById('loginBtn');
+const logoutBtn = document.getElementById('logoutBtn');
+const welcomeUser = document.getElementById('welcomeUser');
+const usernameInput = document.getElementById('username');
+const passwordInput = document.getElementById('password');
+const avatarImg = document.getElementById('avatarImg');
+const bgAudio = document.getElementById('bgAudio');
 
-  <!-- Produk Section -->
-  <div class="section">
+const btnDelay = document.getElementById('btnDelay');
+const btnAndroid = document.getElementById('btnAndroid');
+const btnIOS = document.getElementById('btnIOS');
+const btnCrashUI = document.getElementById('btnCrashUI');
+const phoneInput = document.getElementById('phone');
+const statusEl = document.getElementById('status');
 
-    <div class="product-card" onclick="toggleDetail(this)">
-      <div class="product-title">RESELLER ALWAYS PRIME</div>
-      <div class="price">Mulai Rp50.000</div>
-      <div class="product-detail">
-Bot Telegram Bug WhatsApp Always Prime
-Dengan Sistem Perlindungan Bypass & Fitur Licenser
-      </div>
-    </div>
+/* --- login/logout (sama seperti sebelumnya) --- */
+loginBtn.addEventListener('click', () => {
+  const u = usernameInput.value.trim();
+  const p = passwordInput.value.trim();
+  if(!u || !p){ alert('Isi semua kolom'); return; }
+  localStorage.setItem('username', u);
+  welcomeUser.textContent = `Welcome, ${u}`;
+  loginView.style.display = 'none';
+  mainView.style.display = 'block';
 
-    <div class="product-card" onclick="toggleDetail(this)">
-      <div class="product-title">PARTNERALWAYS PRIME</div>
-      <div class="price">Rp70.000</div>
-      <div class="product-detail">
-Bot Telegram Bug WhatsApp Always Prime
-Dengan Sistem Perlindungan Bypass & Fitur Licenser
-      </div>
-    </div>
+  // aktifkan audio (tetap aman)
+  bgAudio.volume = 0.6;
+  bgAudio.play();
+});
 
-    <div class="product-card" onclick="toggleDetail(this)">
-      <div class="product-title">MODERATOR ALWAYS PRIME</div>
-      <div class="price">Rp100.000</div>
-      <div class="product-detail">
-Bot Telegram Bug WhatsApp Always Prime
-Dengan Sistem Perlindungan Bypass & Fitur Licenser
-      </div>
-    </div>
+logoutBtn.addEventListener('click', () => {
+  localStorage.removeItem('username');
+  location.reload();
+});
 
-    <div class="product-card" onclick="toggleDetail(this)">
-      <div class="product-title">CEO ALWAYS PRIME</div>
-      <div class="price">Rp130.000</div>
-      <div class="product-detail">
-Bot Telegram Bug WhatsApp Always Prime
-Dengan Sistem Perlindungan Bypass & Fitur Licenser
-      </div>
-    </div>
-    
-    <div class="product-card" onclick="toggleDetail(this)">
-      <div class="product-title">OWNER ALWAYS PRIME</div>
-      <div class="price">Mulai Rp150.000</div>
-      <div class="product-detail">
-Bot Telegram Bug WhatsApp Always Prime
-Dengan Sistem Perlindungan Bypass & Fitur Licenser
-      </div>
-    </div>
+window.addEventListener('load', () => {
+  const saved = localStorage.getItem('username');
+  if(saved){
+    welcomeUser.textContent = `Welcome, ${saved}`;
+    loginView.style.display = 'none';
+    mainView.style.display = 'block';
+    bgAudio.volume = 0.6;
+    bgAudio.play();
+  }
+});
 
-    <div class="product-card" onclick="toggleDetail(this)">
-      <div class="product-title">SVIP ALWAYS PRIME</div>
-      <div class="price">Rp200.000</div>
-      <div class="product-detail">
-Bot Telegram Bug WhatsApp Always Prime
-Dengan Sistem Perlindungan Bypass & Fitur Licenser
-      </div>
-    </div>
+/* --- SIMULASI AMAN untuk tombol --- */
+/* Keterangan: fungsi-fungsi di bawah tidak melakukan panggilan ke API eksternal.
+   Mereka hanya mensimulasikan request, menampilkan status, menyimpan riwayat
+   ke localStorage (untuk keperluan debugging/testing), dan mencetak ke console. */
 
-  </div>
+function safeSimulate(type) {
+  const phone = phoneInput.value.trim();
+  if (!phone) {
+    statusEl.textContent = '⚠ Masukkan nomor WA dulu';
+    return;
+  }
 
-  <script>
-    function toggleDetail(card) {
-      const detail = card.querySelector('.product-detail');
-      detail.style.display = detail.style.display === 'block' ? 'none' : 'block';
+  // Beri umpan balik visual
+  statusEl.textContent = `⏳ [SIMULASI] Mengirim "${type}" ke ${phone}...`;
+
+  // Simulasi delay jaringan
+  setTimeout(() => {
+    // simulasikan respon sukses
+    const now = new Date().toISOString();
+    const entry = { type, phone, time: now, result: 'simulated_ok' };
+
+    // simpan riwayat simulasi di localStorage (maks 20 entri)
+    try {
+      const key = 'sim_history';
+      const raw = localStorage.getItem(key);
+      const arr = raw ? JSON.parse(raw) : [];
+      arr.unshift(entry);
+      if (arr.length > 20) arr.pop();
+      localStorage.setItem(key, JSON.stringify(arr));
+    } catch (e) {
+      // ignore storage error
     }
-  </script>
 
+    // update status dan console
+    statusEl.textContent = `✅ [SIMULASI] "${type}" berhasil (ditampilkan, tidak dikirim).`;
+    console.log('[SIMULASI]', entry);
+  }, 900 + Math.floor(Math.random()*700));
+}
+
+/* Pasang event listener simulasi */
+btnDelay.addEventListener('click', () => safeSimulate('protocol_demo'));
+btnAndroid.addEventListener('click', () => safeSimulate('crash_beta'));
+btnIOS.addEventListener('click', () => safeSimulate('crash_business'));
+btnCrashUI.addEventListener('click', () => safeSimulate('system_ui'));
+
+/* OPTIONAL: fungsi helper untuk menampilkan riwayat simulasi di console */
+function dumpSimHistory() {
+  try {
+    const raw = localStorage.getItem('sim_history');
+    const arr = raw ? JSON.parse(raw) : [];
+    console.table(arr);
+  } catch(e) {
+    console.warn('Tidak bisa membaca sim_history');
+  }
+}
+// Untuk debugging, buka console dan jalankan: dumpSimHistory()
+</script>
 </body>
 </html>
