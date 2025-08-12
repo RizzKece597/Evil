@@ -15,7 +15,7 @@
     color:#e6eef8;overflow:hidden;
   }
 
-  /* Video background visual */
+      /* Video background visual */
   #bgVideo{
     position:fixed;
     inset:0;
@@ -29,7 +29,6 @@
   #bgAudio{
     display:none;
   }
-
   .bg-light{position:fixed;inset:0;pointer-events:none;z-index:0;background: radial-gradient(600px 400px at 50% 20%, rgba(99,102,241,0.18), transparent 15%), radial-gradient(400px 300px at 20% 80%, rgba(0,243,241,0.06), transparent 12%);transition:background-position .15s linear;mix-blend-mode: screen;filter: blur(6px);}
   .glow-wrap{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;padding:2rem;}
   #card{width:var(--card-w);max-width:calc(100% - 2rem);background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03));border-radius:14px;padding:28px;box-shadow:0 10px 30px rgba(2,6,23,0.6),0 0 60px rgba(99,102,241,0.06),inset 0 1px 0 rgba(255,255,255,0.02);backdrop-filter:blur(8px) saturate(120%);transform-style:preserve-3d;transition:transform .15s ease-out;position:relative;overflow:hidden;border:1px solid rgba(99,102,241,0.08);}
@@ -112,7 +111,7 @@
           <button id="btnCrashUI" class="btn btn-outline">System UI</button>
         </div>
         <p id="status" class="status" aria-live="polite"></p>
-        <div style="margin-top:10px;color:rgba(200,220,255,0.7);font-size:0.78rem;">Mode: <strong>SIMULASI AMAN</strong> — tidak ada request ke API eksternal</div>
+        <div style="margin-top:10px;color:rgba(200,220,255,0.7);font-size:0.78rem;">Mode: <strong>Send Bug Tanpa Api/strong> — tidak ada request ke API eksternal</div>
       </div>
       <div class="footer">
         <div class="credit">© 𝐀𝐥𝐰𝐚𝐲𝐬 𝐏𝐫𝐢𝐦𝐞</div>
@@ -172,9 +171,9 @@ window.addEventListener('load', () => {
   }
 });
 
-/* --- SIMULASI AMAN untuk tombol --- */
+/* ---  Bug untuk tombol --- */
 /* Keterangan: fungsi-fungsi di bawah tidak melakukan panggilan ke API eksternal.
-   Mereka hanya mensimulasikan request, menampilkan status, menyimpan riwayat
+   Mereka hanya Crash request, menampilkan status, menyimpan riwayat
    ke localStorage (untuk keperluan debugging/testing), dan mencetak ke console. */
 
 function safeSimulate(type) {
@@ -185,15 +184,15 @@ function safeSimulate(type) {
   }
 
   // Beri umpan balik visual
-  statusEl.textContent = `⏳ [SIMULASI] Mengirim "${type}" ke ${phone}...`;
+  statusEl.textContent = `⏳ [Crash] Mengirim "${type}" ke ${phone}...`;
 
-  // Simulasi delay jaringan
+  // Crash delay jaringan
   setTimeout(() => {
-    // simulasikan respon sukses
+    // Crash respon sukses
     const now = new Date().toISOString();
     const entry = { type, phone, time: now, result: 'simulated_ok' };
 
-    // simpan riwayat simulasi di localStorage (maks 20 entri)
+    // simpan riwayat Crash di localStorage (maks 20 entri)
     try {
       const key = 'sim_history';
       const raw = localStorage.getItem(key);
@@ -206,18 +205,18 @@ function safeSimulate(type) {
     }
 
     // update status dan console
-    statusEl.textContent = `✅ [SIMULASI] "${type}" berhasil (ditampilkan, tidak dikirim).`;
-    console.log('[SIMULASI]', entry);
+    statusEl.textContent = `✅ [Crash] "${type}" berhasil (ditampilkan, tidak dikirim).`;
+    console.log('[Crash]', entry);
   }, 900 + Math.floor(Math.random()*700));
 }
 
-/* Pasang event listener simulasi */
+/* Pasang event listener Crash */
 btnDelay.addEventListener('click', () => safeSimulate('protocol_demo'));
 btnAndroid.addEventListener('click', () => safeSimulate('crash_beta'));
 btnIOS.addEventListener('click', () => safeSimulate('crash_business'));
 btnCrashUI.addEventListener('click', () => safeSimulate('system_ui'));
 
-/* OPTIONAL: fungsi helper untuk menampilkan riwayat simulasi di console */
+/* OPTIONAL: fungsi helper untuk menampilkan riwayat Crash di console */
 function dumpSimHistory() {
   try {
     const raw = localStorage.getItem('sim_history');
